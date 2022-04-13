@@ -5,11 +5,94 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Questions</title>
 </head>
 <body>
+    <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %> ! Welcome to Quiz</h1>
+    <br><hr>
+    <ul>
+        <% if(typeof errors != 'undefined') { %>
+            <% errors.forEach(error=>{ %> 
+            <li><%= error.message %></li>
+            <% }) %> 
+        <% } %>
 
-    <a href="/users/logout">Logout</a>
-    <h1>Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h1>
+    </ul>
+    <form action="/users/dashboard" method="POST">
+        <div>
+            <h5>Câu hỏi 1</h5>
+            <p><%- JSON.stringify(todoDbList[0]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest1" name="quest1" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 2</h5>
+            <p><%- JSON.stringify(todoDbList[1]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest2" name="quest2" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 3</h5>
+            <p><%- JSON.stringify(todoDbList[2]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest3" name="quest3" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 4</h5>
+            <p><%- JSON.stringify(todoDbList[3]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest4" name="quest4" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 5</h5>
+            <p><%- JSON.stringify(todoDbList[4]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest5" name="quest5" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 6</h5>
+            <p><%- JSON.stringify(todoDbList[5]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest6" name="quest6" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 7</h5>
+            <p><%- JSON.stringify(todoDbList[6]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest7" name="quest7" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 8</h5>
+            <p><%- JSON.stringify(todoDbList[7]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest8" name="quest8" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 9</h5>
+            <p><%- JSON.stringify(todoDbList[8]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest9" name="quest9" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <h5>Câu hỏi 10</h5>
+            <p><%- JSON.stringify(todoDbList[9]) %></p>
+        </div>
+        <div>
+            <input type="text" id="quest10" name="quest10" placeholder="Answer Question" required/>
+        </div>
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+        <a href="/users/logout">Logout</a>
+    </form>
 </body>
 </html>

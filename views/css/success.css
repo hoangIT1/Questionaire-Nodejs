@@ -1,0 +1,18 @@
+.body{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    background-image: url("https://previews.123rf.com/images/titco/titco2004/titco200400024/144919598-wood-background-abstract-wooden-texture.jpg");
+}
+
+.container{
+    margin: auto;
+}
+.title {
+    font-size:50px;
+    text-align: center;
+}
+.des{
+    font-size: 35px;
+    text-align: center;
+}

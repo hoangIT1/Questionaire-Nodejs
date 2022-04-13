@@ -7,8 +7,9 @@ const session = require('express-session');
 const flash = require ('express-flash');
 const passport = require("passport");
 const jwt = require('jsonwebtoken');
-
+const db = require('./questQuery');
 const initializePassport = require('./passportConfig');
+const { user } = require('pg/lib/defaults');
 
 initializePassport(passport);
 
@@ -46,7 +47,13 @@ app.get("/users/login", checkAuthenticated ,(req, res) => {
 });
 
 app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
-    res.render("Dashboard", { user: req.user.name });
+    const sql = `SELECT question FROM questions`;
+    pool.query(sql, (error, results) => {
+        if (error) {
+            throw error;
+        }
+        res.render("Dashboard", {todoDbList: results.rows, user: req.user.name})
+    });
 });
 
 app.get('/users/logout', (req, res) => {
@@ -55,15 +62,38 @@ app.get('/users/logout', (req, res) => {
     res.redirect("/users/login");
 });
 
+app.post("/users/dashboard", async (req, res) => {
+    let {quest1, quest2, quest3, quest4, quest5, quest6, quest7, quest8, quest9, quest10} = req.body;
+    // let errors = [];
+    // if (!quest1 || !quest2 || !quest3 || !quest4 || !quest5 || !quest6 || !quest7 || !quest8 || !quest9 || !quest10 ) {
+    //     errors.push({message: "Please enter all fields"});
+    // }
+    let labelsFromDb = [];
+    let score = 0;
+    const sql = `SELECT answer FROM questions`;
+    pool.query(sql, (error, results) => {
+        if (error) {
+            throw error;
+        }
+        if (results.rows[0].answer == quest1) score++;
+        if (results.rows[1].answer == quest2) score++;
+        if (results.rows[2].answer == quest3) score++;
+        if (results.rows[3].answer == quest4) score++;
+        if (results.rows[4].answer == quest5) score++;
+        if (results.rows[5].answer == quest6) score++;
+        if (results.rows[6].answer == quest7) score++;
+        if (results.rows[7].answer == quest8) score++;
+        if (results.rows[8].answer == quest9) score++;
+        if (results.rows[9].answer == quest10) score++;
+        console.log(score);
+        req.flash('success_msg', `You are now finish Quiz. Your score is: ${score}`);
+        res.render('success',{score: score});
+    })
+    
+});
+
 app.post("/users/register", async (req, res) => {
     let { name, email, password, password2 } = req.body;
-  
-    console.log({
-      name,
-      email,
-      password,
-      password2
-    });
 
     let errors = [];
     if (!name || !email || !password || !password2 ) {
@@ -80,7 +110,6 @@ app.post("/users/register", async (req, res) => {
     } else {
         //form validation has passed
         let hashedPassword = await bcrypt.hash(password, 10);
-        console.log(hashedPassword);
 
         pool.query(
             `SELECT * FROM users
